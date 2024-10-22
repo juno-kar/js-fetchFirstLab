@@ -1,13 +1,35 @@
-"Ваша функція повинна робити GET-запит до вказаного URL і отримати дані."
-"Поверніть дані користувачів у форматі масиву"
-"Дані мають включати такі поля, як id та name."
+// Задача 1: Написати функцію, яка повертає найпопулярніші товарні категорії на основі продажів.
+// Спочатку фільтруємо товари, які продані більше 5 разів, потім сортуємо їх за кількістю продажів,
+// а потім залишаємо тільки унікальні категорії товарів.
+"ВИКОРИСТОВУВАТИ ЛИШЕ МЕТОДИ МАСИВІВ filter, map, sort. Для того щоб залишити лише унікальні категорії товарів можна використати конструкцію new Set, або використати метод filter()/indexOf()/forEach()"
 
-"https://jsonplaceholder.typicode.com/users - адреса куди робити запит"
+function getPopularCategories(products) {
+  //Ваш код
+  let filteredProducts = products
+  .filter(product => product.sales > 5)
+  .sort((a, b) => b.sales - a.sales);   
 
-function fetchUsers() {
-  // Ваш код
+  let uniqueCategories = [];
+
+  filteredProducts.forEach(product => {
+    if (!uniqueCategories.includes(product.category)) {
+      uniqueCategories.push(product.category);
+    }
+  });
+
+  return uniqueCategories;
 }
 
-console.log(fetchUsers())
+// Приклад використання:
+const products = [
+  { name: 'Phone', category: 'Electronics', sales: 10 },
+  { name: 'Tablet', category: 'Electronics', sales: 3 },
+  { name: 'Shirt', category: 'Clothing', sales: 8 },
+  { name: 'Laptop', category: 'Electronics', sales: 12 },
+  { name: 'Jacket', category: 'Clothing', sales: 2 },
+  { name: 'Shoes', category: 'Footwear', sales: 6 },
+  { name: 'Watch', category: 'Electronics', sales: 7 }
+];
 
-module.exports = fetchUsers;
+console.log(getPopularCategories(products)); // ['Electronics', 'Clothing', 'Footwear']
+module.exports = getPopularCategories;

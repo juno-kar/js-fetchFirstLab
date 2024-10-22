@@ -1,14 +1,31 @@
-"Ваш код повинен зробити PATCH-запит до вказаного URL, де {userId} – це ID існуючого користувача."
-"Для оновлення користувача передайте в запит нові дані, наприклад, нове ім’я."
-"Поверніть відповідь від сервера з оновленими даними користувача."
+// Маємо об'єкт з інформацією про види спорту, кількість представників і кількість медалей. 
+// Необхідно додати нове поле percentOfSuccess, яке буде показувати відсоток завойованих медалей від загальної кількості спортсменів у кожному виді спорту.
+"ВИКОРИСТОВУВАТИ ЛИШЕ МЕТОДИ МАСИВІВ filter, map, sort та інші, які є в файлі methods.js."
+"Можливо в цій задачі доведеться в методі map розкривати фігурні дужки для роботи з обʼєктом."
+// Щось тиру Array.map(item => {
+//   blablabla
+//  .. return ЩОСЬ)
+// })
+"Для заокруглення числа можна до десятих використовуйте .toFixed(1)"
 
-"https://jsonplaceholder.typicode.com/users - адреса куди робити запит"
-
-
-function updateUser(id, updatedData) {
+function addSuccessPercent(olympicRepresentation) {
   // Ваш код
+  return olympicRepresentation.map(sport => {
+    let percentOfSuccess = sport.medals && sport.athletes ? ((sport.medals / sport.athletes) * 100) : 0;
+    percentOfSuccess = percentOfSuccess.toFixed(1) + "%";
+    return {
+        ...sport,
+        percentOfSuccess
+    };
+});
 }
 
-console.log(updateUser(1, { name: 'New Name' }));
+const olympicRepresentation = [
+  { sport: 'Swimming', athletes: 20, medals: 6 },
+  { sport: 'Gymnastics', athletes: 10, medals: 2 },
+  { sport: 'Boxing', athletes: 15, medals: 5 },
+  { sport: 'Athletics', athletes: 25, medals: 3 }
+];
 
-module.exports = updateUser;
+console.log(addSuccessPercent(olympicRepresentation));
+module.exports = addSuccessPercent;
