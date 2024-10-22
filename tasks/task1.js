@@ -1,35 +1,25 @@
-// Задача 1: Написати функцію, яка повертає найпопулярніші товарні категорії на основі продажів.
-// Спочатку фільтруємо товари, які продані більше 5 разів, потім сортуємо їх за кількістю продажів,
-// а потім залишаємо тільки унікальні категорії товарів.
-"ВИКОРИСТОВУВАТИ ЛИШЕ МЕТОДИ МАСИВІВ filter, map, sort. Для того щоб залишити лише унікальні категорії товарів можна використати конструкцію new Set, або використати метод filter()/indexOf()/forEach()"
+"Ваша функція повинна робити GET-запит до вказаного URL і отримати дані."
+"Поверніть дані користувачів у форматі масиву"
+"Дані мають включати такі поля, як id та name."
 
-function getPopularCategories(products) {
-  //Ваш код
-  let filteredProducts = products
-  .filter(product => product.sales > 5)
-  .sort((a, b) => b.sales - a.sales);   
+"https://jsonplaceholder.typicode.com/users - адреса куди робити запит"
 
-  let uniqueCategories = [];
-
-  filteredProducts.forEach(product => {
-    if (!uniqueCategories.includes(product.category)) {
-      uniqueCategories.push(product.category);
+async function fetchUsers() {
+  // Ваш код
+    try {
+        const response = await fetch(url);
+        const users = await response.json();
+        return users.map(user => ({
+            id: user.id,
+            name: user.name
+        }));
+    } catch (error) {
+        console.error("Помилка отримання даних:", error);
     }
-  });
-
-  return uniqueCategories;
 }
 
-// Приклад використання:
-const products = [
-  { name: 'Phone', category: 'Electronics', sales: 10 },
-  { name: 'Tablet', category: 'Electronics', sales: 3 },
-  { name: 'Shirt', category: 'Clothing', sales: 8 },
-  { name: 'Laptop', category: 'Electronics', sales: 12 },
-  { name: 'Jacket', category: 'Clothing', sales: 2 },
-  { name: 'Shoes', category: 'Footwear', sales: 6 },
-  { name: 'Watch', category: 'Electronics', sales: 7 }
-];
+const url = "https://jsonplaceholder.typicode.com/users";
 
-console.log(getPopularCategories(products)); // ['Electronics', 'Clothing', 'Footwear']
-module.exports = getPopularCategories;
+console.log(fetchUsers());
+
+module.exports = fetchUsers;

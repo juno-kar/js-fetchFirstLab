@@ -1,23 +1,35 @@
-// Функція отримує масив товарів і повертає всі товари, які мають ціну нижчу за 100 або вищу за 500
-"ВИКОРИСТОВУВАТИ ЛИШЕ МЕТОДИ МАСИВІВ filter, map, sort та інші, які є в файлі methods.js."
+"Ваш код повинен зробити POST-запит до вказаного URL."
+"Для створення нового користувача, передайте в запит наступні дані:"
+"name: ваше ім’я"
+"email: ваш email"
+"Поверніть відповідь від сервера після створення користувача."
 
-const products = [
-  { name: 'Laptop', price: 800 },
-  { name: 'Phone', price: 250 },
-  { name: 'Shirt', price: 30 },
-  { name: 'Watch', price: 120 },
-  { name: 'Tablet', price: 550 },
-  { name: 'Shoes', price: 75 },
-  { name: 'PlayStation', price: 590 }
-];
+"https://jsonplaceholder.typicode.com/users - адреса куди робити запит"
 
-function getProductsNotInPriceRange(products) {
+
+async function createUser({ name, email }) {
   // Ваш код
-  let result = products
-    .filter(product => product.price < 100 || product.price > 500)
-    .map(product => product.name);
-  return result;
-}
-
-console.log(getProductsNotInPriceRange(products));
-module.exports = getProductsNotInPriceRange;
+  try {
+   const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email
+          })
+  });
+  
+  const data = await response.json();
+  return data;
+  } catch (error) {
+    console.error("Помилка при створенні користувача:", error);
+  }
+  }
+  
+  const url = "https://jsonplaceholder.typicode.com/users";
+  console.log(createUser({ name: "Sam", email: "fjsnfkjns2342@gmail.com" }));
+  
+  module.exports = createUser;
+  
